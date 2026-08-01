@@ -245,9 +245,17 @@
                         <span class="producto-categoria">${producto.categorias?.nombre || 'General'}</span>
                         <h1>${producto.nombre}</h1>
                         
-                        ${producto.alto_metros || producto.ancho_metros || producto.largo_metros || producto.tamano_etiqueta ? `
+                        ${producto.alto_metros || producto.ancho_metros || producto.largo_metros || producto.tamano_etiqueta || producto.descripcion ? `
                             <div class="producto-especificaciones">
                                 <h3>Especificaciones</h3>
+                                
+                                ${producto.descripcion ? `
+                                    <div class="espec-descripcion" style="margin-bottom: 1rem; padding: 0.75rem; background: #fff; border-radius: 6px; border-left: 3px solid #e94560;">
+                                        <span class="espec-label" style="display: block; margin-bottom: 0.25rem; font-weight: 600;">Descripción:</span>
+                                        <span class="espec-valor" style="color: #333; line-height: 1.6;">${producto.descripcion}</span>
+                                    </div>
+                                ` : ''}
+                                
                                 <div class="espec-grid">
                                     ${producto.alto_metros ? `
                                         <div class="espec-item">
@@ -271,12 +279,6 @@
                                         <div class="espec-item">
                                             <span class="espec-label">Tamaño:</span>
                                             <span class="espec-valor">${producto.tamano_etiqueta}</span>
-                                        </div>
-                                    ` : ''}
-                                    ${producto.descripcion ? `
-                                        <div class="espec-item">
-                                            <span class="espec-label">Descripción:</span>
-                                            <span class="espec-valor">${producto.descripcion}</span>
                                         </div>
                                     ` : ''}
                                 </div>
