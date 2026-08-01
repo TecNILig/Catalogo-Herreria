@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo | Tecnilight</title>
+    <meta name="description" content="Explora nuestro catálogo completo de productos de herrería artística e iluminación.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+    <script src="layout.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">Nuestro <span>Catálogo</span></h1>
+                
+                <!-- Filtros -->
+                <div class="filtros">
+                    <div class="filtros-grid">
+                        <div class="filtro-group">
+                            <label for="filtro-categoria">Categoría</label>
+                            <select id="filtro-categoria">
+                                <option value="">Todas</option>
+                            </select>
+                        </div>
+                        <div class="filtro-group">
+                            <label for="filtro-tamano">Tamaño</label>
+                            <select id="filtro-tamano">
+                                <option value="">Todos</option>
+                                <option value="Chico">Chico</option>
+                                <option value="Grande">Grande</option>
+                                <option value="Monumental">Monumental</option>
+                            </select>
+                        </div>
+                        <div class="filtro-group">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-primary" onclick="aplicarFiltros()">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid de Productos -->
+                <div id="productos-grid" class="productos-grid">
+                    <p style="grid-column: 1/-1; text-align:center; color: #666;">Cargando productos...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let productosCache = [];
+
+        async function cargarFiltros() {
+            const app = window.TecnilightApp;
+            const selectCat = document.getElementById('filtro-categoria');
+            const categorias = await app.obtenerCategorias();
+            
+            categorias.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.slug;
+                option.textContent = cat.nombre;
+                selectCat.appendChild(option);
+            });
+        }
+
+        async function cargarProductos() {
+            const app = window.TecnilightApp;
+            const grid = document.getElementById('productos-grid');
+            
+            // Leer filtros de URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoria = urlParams.get('categoria');
+            const tamano = urlParams.get('tamano');
+            
+            // Aplicar a selects
+            if (categoria) document.getElementById('filtro-categoria').value = categoria;
+            if (tamano) document.getElementById('filtro-tamano').value = tamano;
+            
+            const filtros = {};
+            if (categoria) filtros.categoria = categoria;
+            if (tamano) filtros.tamano = tamano;
+            
+            const productos = await app.obtenerProductos(filtros);
+            productosCache = productos;
+            
+            if (productos.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">No se encontraron productos.</p>';
+            } else {
+                grid.innerHTML = productos.map(p => app.crearTarjetaProducto(p)).join('');
+            }
+        }
+
+        function aplicarFiltros() {
+            const categoria = document.getElementById('filtro-categoria').value;
+            const tamano = document.getElementById('filtro-tamano').value;
+            
+            const params = new URLSearchParams();
+            if (categoria) params.set('categoria', categoria);
+            if (tamano) params.set('tamano', tamano);
+            
+            window.location.search = params.toString();
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await cargarFiltros();
+            await cargarProductos();
+        });
+    </script>
+</body>
+</html>

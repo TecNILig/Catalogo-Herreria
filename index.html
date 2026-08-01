@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnilight | Herrería Artística e Iluminación</title>
+    <meta name="description" content="Catálogo de productos de herrería artística e iluminación decorativa. Temporada navideña, fiestas patrias y pedidos personalizados.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+    <script src="layout.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h1>Iluminación que <span>Transforma</span> tus Espacios</h1>
+                <p>Herrería artística con diseños únicos para Fiestas Patrias.</p>
+                <a href="catalogo.html" class="btn btn-primary">Ver Catálogo</a>
+            </div>
+        </section>
+
+        <!-- Categorías Destacadas -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Nuestras <span>Categorías</span></h2>
+                <div id="categorias-grid" class="productos-grid">
+                    <!-- Se carga dinámicamente -->
+                    <p style="grid-column: 1/-1; text-align:center; color: #666;">Cargando categorías...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Productos Destacados -->
+        <section class="section" style="background: #fff;">
+            <div class="container">
+                <h2 class="section-title">Productos <span>Destacados</span></h2>
+                <div id="productos-destacados" class="productos-grid">
+                    <!-- Se carga dinámicamente -->
+                    <p style="grid-column: 1/-1; text-align:center; color: #666;">Cargando productos...</p>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="catalogo.html" class="btn btn-primary">Ver Todo el Catálogo</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Personalizados -->
+        <section class="section" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff;">
+            <div class="container" style="text-align: center;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">¿Tienes un Diseño en Mente?</h2>
+                <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9;">
+                    Creamos piezas personalizadas a tus especificaciones. Cuéntanos tu idea y te cotizamos.
+                </p>
+                <a href="personalizados.html" class="btn btn-primary">Solicitar Cotización</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Cargar datos en el home
+        document.addEventListener('DOMContentLoaded', async () => {
+            const app = window.TecnilightApp;
+            if (!app) return;
+
+            // Cargar productos destacados (solo galeria = false, limitado a 6)
+            const productos = await app.obtenerProductos({ soloGaleria: false });
+            const destacadosContainer = document.getElementById('productos-destacados');
+            if (destacadosContainer && productos.length > 0) {
+                destacadosContainer.innerHTML = productos
+                    .slice(0, 6)
+                    .map(p => app.crearTarjetaProducto(p))
+                    .join('');
+            } else if (destacadosContainer) {
+                destacadosContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">No hay productos disponibles.</p>';
+            }
+
+            // Cargar categorías
+            const categorias = await app.obtenerCategorias();
+            const catsContainer = document.getElementById('categorias-grid');
+            if (catsContainer && categorias.length > 0) {
+                // Cambiar a flexbox para centrar las tarjetas
+                catsContainer.style.display = 'flex';
+                catsContainer.style.flexWrap = 'wrap';
+                catsContainer.style.justifyContent = 'center';
+                catsContainer.style.gap = '1.5rem';
+                catsContainer.innerHTML = categorias.map(cat => {
+                    let nombre = cat.nombre;
+                    
+                    // Fiestas Patrias - banderas
+                    if (cat.slug === 'fiestas-patrias') {
+                        nombre = '🇲🇽 ' + cat.nombre + ' 🇲🇽';
+                    }
+                    
+                    return `
+                        <a href="catalogo.html?categoria=${cat.slug}" class="producto-card" style="text-align: center; padding: 2rem; width: 280px;">
+                            <h3 style="color: #1a1a2e; font-size: 1.25rem;">${nombre}</h3>
+                            <p style="color: #666; margin-top: 0.5rem;">Ver productos →</p>
+                        </a>
+                    `;
+                }).join('');
+            } else if (catsContainer) {
+                catsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">No hay categorías disponibles.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

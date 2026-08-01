@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto | Tecnilight</title>
+    <meta name="description" content="Detalle del producto seleccionado.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+    <script src="layout.js" defer></script>
+    <script src="app.js" defer></script>
+    <style>
+        .producto-detalle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .producto-galeria {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .galeria-container {
+            position: relative;
+        }
+        .galeria-flecha {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        .galeria-flecha:hover {
+            background: rgba(0,0,0,0.9);
+        }
+        .galeria-flecha.prev {
+            left: 15px;
+        }
+        .galeria-flecha.next {
+            right: 15px;
+        }
+        .producto-galeria img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .producto-info-detalle {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .producto-info-detalle h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        .producto-categoria {
+            color: #666;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 1px;
+        }
+        .producto-info-detalle h1 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 0.5rem;
+        }
+        .producto-especificaciones {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .producto-especificaciones h3 {
+            margin-bottom: 0.75rem;
+            color: #1a1a2e;
+        }
+        .espec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+        .espec-item {
+            display: flex;
+            justify-content: space-between;
+        }
+        .espec-label {
+            color: #666;
+        }
+        .espec-valor {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .btn-cotizar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: #25d366;
+            color: #fff;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .btn-cotizar:hover {
+            background: #128c7e;
+        }
+        .miniaturas {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        .miniatura {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .miniatura:hover,
+        .miniatura.active {
+            border-color: #e94560;
+        }
+        @media (max-width: 768px) {
+            .producto-detalle {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="section">
+            <div class="container">
+                <div id="producto-container">
+                    <p style="text-align: center; color: #666;">Cargando producto...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let productoActual = null;
+        let imagenesArray = [];
+        let imagenIndexActual = 0;
+
+        function actualizarImagenPrincipal() {
+            if (imagenesArray.length === 0) return;
+            const img = document.getElementById('imagen-principal');
+            if (img) {
+                img.src = imagenesArray[imagenIndexActual].url_imagen;
+            }
+            // Actualizar miniaturas activas
+            document.querySelectorAll('.miniatura').forEach((m, i) => {
+                m.classList.toggle('active', i === imagenIndexActual);
+            });
+        }
+
+        function cambiarImagenAnterior() {
+            if (imagenesArray.length === 0) return;
+            imagenIndexActual = (imagenIndexActual - 1 + imagenesArray.length) % imagenesArray.length;
+            actualizarImagenPrincipal();
+        }
+
+        function cambiarImagenSiguiente() {
+            if (imagenesArray.length === 0) return;
+            imagenIndexActual = (imagenIndexActual + 1) % imagenesArray.length;
+            actualizarImagenPrincipal();
+        }
+
+        function cambiarImagenPorIndex(index) {
+            if (index < 0 || index >= imagenesArray.length) return;
+            imagenIndexActual = index;
+            actualizarImagenPrincipal();
+        }
+
+        async function cargarProducto() {
+            const app = window.TecnilightApp;
+            const slug = app.obtenerParametroURL('articulo');
+            const container = document.getElementById('producto-container');
+            
+            if (!slug) {
+                container.innerHTML = '<p style="text-align: center;">Producto no especificado.</p>';
+                return;
+            }
+
+            const producto = await app.obtenerProductoPorSlug(slug);
+            productoActual = producto;
+            
+            if (!producto) {
+                container.innerHTML = '<p style="text-align: center;">Producto no encontrado.</p>';
+                return;
+            }
+
+            const imagenes = producto.imagenes_producto || [];
+            imagenesArray = imagenes;
+            imagenIndexActual = 0;
+            const imagenPrincipal = imagenes.find(img => img.es_portada)?.url_imagen 
+                || imagenes[0]?.url_imagen 
+                || 'assets/img/placeholder.jpg';
+            
+            const whatsappLink = app.generarLinkWhatsApp(producto);
+
+            container.innerHTML = `
+                <div class="producto-detalle">
+                    <div class="producto-galeria">
+                        <div class="galeria-container">
+                            <img id="imagen-principal" src="${imagenPrincipal}" alt="${producto.nombre}">
+                            ${imagenes.length > 1 ? `
+                                <button class="galeria-flecha prev" onclick="cambiarImagenAnterior()">‹</button>
+                                <button class="galeria-flecha next" onclick="cambiarImagenSiguiente()">›</button>
+                            ` : ''}
+                        </div>
+                        ${imagenes.length > 1 ? `
+                            <div class="miniaturas">
+                                ${imagenes.map((img, i) => `
+                                    <img src="${img.url_imagen}" class="miniatura ${i === 0 ? 'active' : ''}" 
+                                         onclick="cambiarImagenPorIndex(${i})" data-index="${i}" alt="">
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="producto-info-detalle">
+                        <span class="producto-categoria">${producto.categorias?.nombre || 'General'}</span>
+                        <h1>${producto.nombre}</h1>
+                        
+                        ${producto.alto_metros || producto.ancho_metros || producto.largo_metros || producto.tamano_etiqueta ? `
+                            <div class="producto-especificaciones">
+                                <h3>Especificaciones</h3>
+                                <div class="espec-grid">
+                                    ${producto.alto_metros ? `
+                                        <div class="espec-item">
+                                            <span class="espec-label">Alto:</span>
+                                            <span class="espec-valor">${producto.alto_metros} m</span>
+                                        </div>
+                                    ` : ''}
+                                    ${producto.ancho_metros ? `
+                                        <div class="espec-item">
+                                            <span class="espec-label">Ancho:</span>
+                                            <span class="espec-valor">${producto.ancho_metros} m</span>
+                                        </div>
+                                    ` : ''}
+                                    ${producto.largo_metros ? `
+                                        <div class="espec-item">
+                                            <span class="espec-label">Largo:</span>
+                                            <span class="espec-valor">${producto.largo_metros} m</span>
+                                        </div>
+                                    ` : ''}
+                                    ${producto.tamano_etiqueta ? `
+                                        <div class="espec-item">
+                                            <span class="espec-label">Tamaño:</span>
+                                            <span class="espec-valor">${producto.tamano_etiqueta}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${producto.descripcion ? `
+                                        <div class="espec-item">
+                                            <span class="espec-label">Descripción:</span>
+                                            <span class="espec-valor">${producto.descripcion}</span>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <a href="${whatsappLink}" target="_blank" class="btn-cotizar">
+                            💬 Cotizar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', cargarProducto);
+    </script>
+</body>
+</html>
