@@ -119,7 +119,7 @@ function formatearPrecio(precio) {
  * @returns {string}
  */
 function generarLinkWhatsApp(producto) {
-    const telefono = '5211234567890'; // Reemplazar
+    const telefono = '522214353123'; // Reemplazar
     const mensaje = encodeURIComponent(
         `Hola, me interesa el producto: ${producto.nombre}\n` +
         `Categoría: ${producto.categorias?.nombre || 'N/A'}\n` +
@@ -134,7 +134,7 @@ function generarLinkWhatsApp(producto) {
  * @returns {string}
  */
 function generarLinkWhatsAppPersonalizado(datos) {
-    const telefono = '5211234567890'; // Reemplazar
+    const telefono = '522214353123'; // Reemplazar
     const mensaje = encodeURIComponent(
         `Hola, quiero cotizar un producto personalizado:\n\n` +
         `📐 Dimensiones:\n` +
