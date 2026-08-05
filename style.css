@@ -447,8 +447,8 @@ main {
         right: 0;
         background: var(--color-cream);
         flex-direction: column;
-        padding: 0.5rem 1rem;
-        gap: 4;
+        padding:0.5rem 1rem;
+        gap: 4px;
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;
