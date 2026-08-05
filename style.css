@@ -107,12 +107,17 @@ a {
 }
 
 .nav-link {
+   display: block;
+    padding: 14px 20px;  /* ← AUMENTADO: más área táctil */
+    border-radius: var(--radius-sm);  /* Esquinas redondeadas */
+    border-bottom: none;  /* ← QUITAR borde inferior */
     color: var(--color-primary);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-sm);
+    font-size: 1.05rem;  /* Texto ligeramente más grande */
+    text-align: center;  /* Centrado para mejor tacto */
     transition: var(--transition);
-    font-weight: 500;
 }
+
+
 
 .nav-link:hover,
 .nav-link.active {
@@ -442,13 +447,14 @@ main {
         right: 0;
         background: var(--color-cream);
         flex-direction: column;
-        padding: 1rem;
-        gap: 0;
+        padding: 0.5rem 1rem;
+        gap: 4;
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;
         transition: var(--transition);
         border-bottom: 1px solid var(--color-gray-200);
+        box-shadow: var(--shadow-md); 
     }
     
     .nav-menu.active {
