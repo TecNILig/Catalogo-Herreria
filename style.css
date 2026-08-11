@@ -184,50 +184,88 @@ main {
 }
 
 /* ============================================
-   HERO
+   HERO (Banner Responsivo con Botones Superpuestos)
    ============================================ */
 .hero {
-    background: #000000; /* Fondo negro puro */
-    padding: 4rem 0;
+    background: #000000;
+    padding: 2rem 0; /* Reducimos el padding para que el banner luzca más */
     text-align: center;
-    min-height: 400px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    overflow: hidden; /* Evita que el resplandor genere scroll */
 }
 
-.hero-content {
-    max-width: 1200px; /* Hacemos el contenedor más ancho para que quepa todo */
+/* La "caja invisible" que mantiene todo unido */
+.hero-wrapper {
+    position: relative; 
+    width: 100%;
+    max-width: 1400px; /* Suficientemente ancho para el banner */
     margin: 0 auto;
     display: flex;
-    flex-direction: row; /* Alineación horizontal */
-    align-items: center; /* Centrado vertical */
-    justify-content: center; /* Centrado horizontal */
-    gap: 3rem; /* Separación entre botones y la imagen central */
+    flex-direction: column;
 }
 
-.hero-neon-img {
-    max-width: 100%;
+/* Imagen de Escritorio (Visible por defecto) */
+.hero-img-desktop {
+    width: 100%;
     height: auto;
-    max-height: 400px;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-    flex-shrink: 0; /* Evita que la imagen se aplaste si el texto es muy largo */
+    display: block;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+}
+
+/* Imagen de Móvil (Oculta por defecto) */
+.hero-img-mobile {
+    width: 100%;
+    height: auto;
+    display: none;
+    max-height: 350px;
+    object-fit: contain;
+}
+
+/* Capa de los botones que flota sobre el banner */
+.hero-overlay-botones {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center; /* Centra los botones verticalmente */
+    justify-content: space-between; /* Empuja los botones a los extremos izquierdo y derecho */
+    padding: 0 8%; /* Margen para asegurar que caigan en la zona negra y no pegados a la orilla */
+    pointer-events: none; /* Evita que la capa invisible bloquee interacciones */
+}
+
+/* Reactiva el clic solo en los botones */
+.hero-overlay-botones .btn {
+    pointer-events: auto;
+    z-index: 10;
 }
 
 /* ============================================
    RESPONSIVE DEL HERO (Para tablets y celulares)
    ============================================ */
 @media (max-width: 1024px) {
-    .hero-content {
-        flex-direction: column; /* Cambia a alineación vertical en pantallas más chicas */
-        gap: 2rem;
+    /* Intercambio de imágenes */
+    .hero-img-desktop {
+        display: none; 
     }
     
-    .hero-neon-img {
-        order: -1; /* Fuerza a la imagen a aparecer arriba de los botones en celulares */
+    .hero-img-mobile {
+        display: block; 
+        margin: 0 auto;
+    }
+
+    /* Los botones dejan de flotar y se acomodan abajo */
+    .hero-overlay-botones {
+        position: relative; 
+        flex-direction: column; /* Se apilan en columna */
+        gap: 1.5rem;
+        padding: 2rem 1rem 0 1rem;
+        height: auto;
+        justify-content: center;
     }
 }
+
 /* ============================================
    BOTONES
    ============================================ */
