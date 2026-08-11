@@ -9,14 +9,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
     <script src="layout.js" defer></script>
     <script src="app.js" defer></script>
-    <style>
-        .form-personalizado {
+    <style>.form-personalizado {
             max-width: 600px;
             margin: 0 auto;
-            background: #fff;
-            padding: 2rem;
+            background: #111111; /* Fondo gris muy oscuro */
+            padding: 2.5rem;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid #333333; /* Borde sutil */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05); /* Resplandor exterior muy ligero */
         }
         .form-group {
             margin-bottom: 1.5rem;
@@ -25,42 +25,59 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #333;
+            color: #cccccc; /* Texto claro */
+            letter-spacing: 0.5px;
         }
         .form-group input,
         .form-group textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #dee2e6;
+            background-color: #000000; /* Interior negro puro */
+            color: #ffffff; /* Texto blanco al escribir */
+            border: 1px solid #555555;
             border-radius: 8px;
             font-size: 1rem;
             font-family: inherit;
+            transition: all 0.3s ease;
         }
+        /* Efecto Neón al hacer clic en los campos */
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #e94560;
+            border-color: #00ff00; /* Borde verde neón */
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
         }
         .dimensiones-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
         }
+        
+        /* Botón Neón Verde estilo WhatsApp */
         .btn-enviar {
             width: 100%;
             padding: 1rem;
-            background: #25d366;
-            color: #fff;
+            background: transparent;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.3);
+            text-shadow: 0 0 5px #00ff00;
             font-size: 1.125rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 30px; /* Bordes redondeados como los otros botones */
             cursor: pointer;
             transition: all 0.3s;
         }
         .btn-enviar:hover {
-            background: #128c7e;
+            background: #00ff00;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), inset 0 0 15px rgba(0, 255, 0, 0.6);
+            text-shadow: none;
+            transform: translateY(-2px);
         }
+        
         @media (max-width: 600px) {
             .dimensiones-grid {
                 grid-template-columns: 1fr;
@@ -73,7 +90,7 @@
         <section class="section">
             <div class="container">
                 <h1 class="section-title">Cotización <span>Personalizada</span></h1>
-                <p style="text-align: center; max-width: 600px; margin: -1rem auto 2rem; color: #666;">
+                <p style="text-align: center; max-width: 600px; margin: -1rem auto 2rem; color: #aaaaaa;">
                     Describe tu proyecto y te enviaremos una cotización detallada por WhatsApp.
                 </p>
 

@@ -15,9 +15,30 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="container hero-content">
-                <h1>Iluminación que <span>Transforma</span> tus Espacios</h1>
-                <p>Herrería artística con diseños únicos para Fiestas Patrias.</p>
-                <a href="catalogo.html" class="btn btn-primary">Ver Catálogo</a>
+                <!-- Botón Izquierdo (Verde) -->
+                <a href="personalizados.html" class="btn btn-neon-verde">Cotizar Personalizado</a>
+                
+                <!-- Imagen Central -->
+                <img src="assets/img/viva-mexico.png" alt="Viva México" class="hero-neon-img">
+                
+                <!-- Botón Derecho (Rojo) -->
+                <a href="catalogo.html" class="btn btn-neon-rojo">Ver Categorías</a>
+            </div>
+        </section>
+
+     
+
+        <!-- Productos Destacados -->
+        <section class="section" style="background: #000000;">
+            <div class="container">
+                <h2 class="section-title">Productos <span>Destacados</span></h2>
+                <div id="productos-destacados" class="productos-grid">
+                    <!-- Se carga dinámicamente -->
+                    <p style="grid-column: 1/-1; text-align:center; color: #666;">Cargando productos...</p>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="catalogo.html" class="btn btn-neon-rojo">Ver Todo el Catálogo</a>
+                </div>
             </div>
         </section>
 
@@ -31,31 +52,7 @@
                 </div>
             </div>
         </section>
-
-        <!-- Productos Destacados -->
-        <section class="section" style="background: #fff;">
-            <div class="container">
-                <h2 class="section-title">Productos <span>Destacados</span></h2>
-                <div id="productos-destacados" class="productos-grid">
-                    <!-- Se carga dinámicamente -->
-                    <p style="grid-column: 1/-1; text-align:center; color: #666;">Cargando productos...</p>
-                </div>
-                <div style="text-align: center; margin-top: 2rem;">
-                    <a href="catalogo.html" class="btn btn-primary">Ver Todo el Catálogo</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Personalizados -->
-        <section class="section" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff;">
-            <div class="container" style="text-align: center;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem;">¿Tienes un Diseño en Mente?</h2>
-                <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.9;">
-                    Creamos piezas personalizadas a tus especificaciones. Cuéntanos tu idea y te cotizamos.
-                </p>
-                <a href="personalizados.html" class="btn btn-primary">Solicitar Cotización</a>
-            </div>
-        </section>
+      
     </main>
 
     <script>
@@ -95,8 +92,8 @@
                     
                     return `
                         <a href="catalogo.html?categoria=${cat.slug}" class="producto-card" style="text-align: center; padding: 2rem; width: 280px;">
-                            <h3 style="color: #1a1a2e; font-size: 1.25rem;">${nombre}</h3>
-                            <p style="color: #666; margin-top: 0.5rem;">Ver productos →</p>
+                            <h3 style="color: #ffffff; font-size: 1.25rem;">${nombre}</h3>
+                            <p style="color: #ffffff; margin-top: 0.5rem;">Ver productos →</p>
                         </a>
                     `;
                 }).join('');

@@ -13,7 +13,7 @@ const NAV_TEMPLATE = `
 <nav class="navbar">
     <div class="container nav-container">
         <a href="index.html" class="logo">
-            <img src="assets/img/logo2.webp" alt="${SITE_CONFIG.nombre}" style="height: 60px; width: auto;">
+            <img src="assets/img/logo-tri.webp" alt="${SITE_CONFIG.nombre}" style="height: 80px; width: auto;">
         </a>
         <button class="nav-toggle" aria-label="Menú" onclick="toggleNav()">
             <span></span>
