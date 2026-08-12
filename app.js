@@ -30,10 +30,20 @@ async function obtenerProductos(filtros = {}) {
             `)
             .order('creado_en', { ascending: false });
         
-        // Aplicar filtros
+        // Aplicar filtro de categoría de forma estricta por ID o relación interna
         if (filtros.categoria) {
-            query = query.eq('categorias.slug', filtros.categoria);
+            // Buscamos primero el ID de la categoría según el slug (ej. 'navideno' o 'fiestas-patrias')
+            const { data: catData } = await supabaseClient
+                .from('categorias')
+                .select('id')
+                .eq('slug', filtros.categoria)
+                .single();
+                
+            if (catData) {
+                query = query.eq('categoria_id', catData.id);
+            }
         }
+
         if (filtros.tamano) {
             query = query.eq('tamano_etiqueta', filtros.tamano);
         }

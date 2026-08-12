@@ -9,13 +9,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
     <script src="layout.js" defer></script>
     <script src="app.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
+    
     <main>
         <section class="section">
             <div class="container">
-                <h1 class="section-title">Nuestro <span>Catálogo</span></h1>
-                
+            <h1 id="titulo-catalogo" class="section-title">Nuestro <span>Catálogo</span></h1>                
+            
                 <!-- Filtros -->
                 <div class="filtros">
                     <div class="filtros-grid">
@@ -74,6 +79,33 @@
             const categoria = urlParams.get('categoria');
             const tamano = urlParams.get('tamano');
             
+           // ==========================================
+            // DETECTOR DE TEMAS (NAVIDAD Y FIESTAS PATRIAS)
+            // ==========================================
+            const tituloCatalogo = document.getElementById('titulo-catalogo');
+            
+            // Limpiamos las clases primero para que no se encimen
+            document.body.classList.remove('tema-navidad', 'tema-patrio');
+
+            if (categoria === 'navideno') {
+                document.body.classList.add('tema-navidad');
+                if (tituloCatalogo) {
+                    tituloCatalogo.innerHTML = '❄️ Especial de <span>Navidad</span> 🎄';
+                }
+            } else if (categoria === 'patrio' || categoria === 'fiestas-patrias') { 
+                // Asegúrate de cambiar 'patrio' por el slug exacto que usas en tu base de datos para esta categoría
+                document.body.classList.add('tema-patrio');
+                if (tituloCatalogo) {
+                    tituloCatalogo.innerHTML = '🇲🇽 Especial de <span>Fiestas Patrias</span> 🎆';
+                }
+            } else {
+                // Si es cualquier otra categoría ("Todos"), se queda normal
+                if (tituloCatalogo) {
+                    tituloCatalogo.innerHTML = 'Nuestro <span>Catálogo</span>';
+                }
+            }
+            // ==========================================
+
             // Aplicar a selects
             if (categoria) document.getElementById('filtro-categoria').value = categoria;
             if (tamano) document.getElementById('filtro-tamano').value = tamano;

@@ -19,7 +19,6 @@
     --color-gray-100: #000000; /* Fondo negro puro para el body */
     --color-gray-200: #1a1a1a; /* Gris muy oscuro para elementos secundarios */
     --color-gray-300: #333333; /* Bordes sutiles oscuros */
-    --font-primary: 'Segoe UI', system-ui, -apple-system, sans-serif;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.6);
     --shadow-lg: 0 10px 25px rgba(0,0,0,0.8);
@@ -27,6 +26,8 @@
     --radius-md: 8px;
     --radius-lg: 12px;
     --transition: all 0.3s ease;
+    --font-primary: 'Barlow Condensed', sans-serif;
+    --font-heading: 'Barlow Condensed', sans-serif;
 }
 
 * {
@@ -37,6 +38,11 @@
 
 html {
     scroll-behavior: smooth;
+}
+
+h1, h2, h3, .section-title, .logo {
+    font-family: var(--font-heading) !important;
+    font-weight: 800;
 }
 
 body {
@@ -93,6 +99,26 @@ a {
         0 0 15px rgba(255, 255, 255, 0.8), 
         50vw 0 15px -5px rgba(255, 0, 0, 0.8);
 }
+
+/* NUEVO: Línea de luz del Navbar en Modo Navidad (Rojo, Blanco, Dorado) */
+body.tema-navidad .navbar::after {
+    background: linear-gradient(90deg, #ff3333 0%, #ffffff 50%, #ffd700 100%) !important;
+    box-shadow: 
+        -50vw 0 15px -5px rgba(255, 51, 51, 0.8), 
+        0 0 15px rgba(255, 255, 255, 0.8), 
+        50vw 0 15px -5px rgba(255, 215, 0, 0.8);
+}
+
+/* Lo mismo para la línea superior del Footer en Modo Navidad */
+body.tema-navidad .footer::before {
+    background: linear-gradient(90deg, #ff3333 0%, #ffffff 50%, #ffd700 100%) !important;
+    box-shadow: 
+        -50vw 0 15px -5px rgba(255, 51, 51, 0.8), 
+        0 0 15px rgba(255, 255, 255, 0.8), 
+        50vw 0 15px -5px rgba(255, 215, 0, 0.8);
+}
+
+
 
 .nav-container {
     display: flex;
@@ -553,8 +579,6 @@ main {
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
-
-
 /* ============================================
    FOOTER
    ============================================ */
@@ -726,4 +750,423 @@ main {
     .productos-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+/* ============================================
+   TEMA NAVIDEÑO - CICLO TRICOLOR (Blanco, Rojo y Dorado)
+   ============================================ */
+
+/* Tarjeta 1, 4, 7... (Rojo Navideño) */
+body.tema-navidad .producto-card:nth-child(3n+1) {
+    border-color: #ff3333;
+    box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
+}
+
+/* Tarjeta 2, 5, 8... (Blanco Nieve) */
+body.tema-navidad .producto-card:nth-child(3n+2) {
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Tarjeta 3, 6, 9... (Dorado Brillante) */
+body.tema-navidad .producto-card:nth-child(3n+3) {
+    border-color: #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+/* Efecto hover general para mantener el brillo cuando pasan el mouse */
+body.tema-navidad .producto-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ============================================
+   BRILLO INTENSO AL PASAR EL CURSOR (HOVER)
+   ============================================ */
+
+/* Tarjeta Roja: Brillo rojo intenso */
+body.tema-navidad .producto-card:nth-child(3n+1):hover {
+    border-color: #ff3333;
+    box-shadow: 0 0 25px rgba(255, 51, 51, 0.6);
+    transform: translateY(-5px);
+}
+
+/* Tarjeta Blanca: Brillo blanco intenso */
+body.tema-navidad .producto-card:nth-child(3n+2):hover {
+    border-color: #ffffff;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+    transform: translateY(-5px);
+}
+
+/* Tarjeta Dorada: Brillo dorado intenso */
+body.tema-navidad .producto-card:nth-child(3n+3):hover {
+    border-color: #ffd700;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    transform: translateY(-5px);
+}
+/* ============================================
+   TEMA NAVIDEÑO - HEADER Y FOOTER PERSONALIZADOS
+   ============================================ */
+
+/* 1. Líneas de luz del Header: Degradado de izquierda a derecha (Rojo, Blanco, Dorado) */
+body.tema-navidad header hr, 
+body.tema-navidad .linea-neon,
+body.tema-navidad .header-divider {
+    background: linear-gradient(90deg, #ff3333 0%, #ffffff 50%, #ffd700 100%) !important;
+    border: none;
+    height: 3px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* 2. Footer: Ajustar el texto y enlaces generales del pie de página */
+body.tema-navidad footer {
+    border-top: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+body.tema-navidad footer a:hover {
+    color: #ffd700 !important; /* Se vuelven dorados al pasar el mouse */
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+/* 3. Íconos Sociales en el Footer (WhatsApp, Facebook, Instagram) */
+body.tema-navidad footer .social-icons a,
+body.tema-navidad footer svg {
+    transition: all 0.3s ease;
+}
+
+/* Efecto festivo al pasar el cursor sobre los íconos del footer */
+body.tema-navidad footer a svg:hover,
+body.tema-navidad footer .social-icon:hover {
+    fill: #ffd700 !important;
+    color: #ffd700 !important;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+    transform: scale(1.1);
+}
+/* ============================================
+   REDES SOCIALES EN MODO NAVIDEÑO
+   ============================================ */
+
+/* WhatsApp en Navidad: Pasa a Rojo Navideño */
+body.tema-navidad .social-icon.whatsapp {
+    color: #ff3333;
+    filter: drop-shadow(0 0 4px rgba(255, 51, 51, 0.6));
+}
+body.tema-navidad .social-icon.whatsapp:hover {
+    filter: drop-shadow(0 0 12px #ff3333) drop-shadow(0 0 22px #ff3333);
+    transform: translateY(-3px) scale(1.1);
+}
+
+/* Facebook en Navidad: Pasa a Blanco Nieve brillante */
+body.tema-navidad .social-icon.facebook {
+    color: #ffffff;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+}
+body.tema-navidad .social-icon.facebook:hover {
+    filter: drop-shadow(0 0 12px #ffffff) drop-shadow(0 0 22px #ffffff);
+    transform: translateY(-3px) scale(1.1);
+}
+
+/* Instagram en Navidad: Pasa a Dorado Festivo */
+body.tema-navidad .social-icon.instagram {
+    color: #ffd700;
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+}
+body.tema-navidad .social-icon.instagram:hover {
+    filter: drop-shadow(0 0 12px #ffd700) drop-shadow(0 0 22px #ffd700);
+    transform: translateY(-3px) scale(1.1);
+}
+
+/* Botón "Cotizar" de las tarjetas en Modo Navidad (Dorado) */
+body.tema-navidad .btn-whatsapp {
+    color: #ffd700;
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3), inset 0 0 10px rgba(255, 215, 0, 0.3);
+    text-shadow: 0 0 5px #ffd700;
+}
+
+body.tema-navidad .btn-whatsapp:hover {
+    background: #ffd700;
+    color: #000000; /* Letras negras para contrastar al encenderse el botón dorado */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 215, 0, 0.6);
+    text-shadow: none;
+}
+
+/* Botón "Filtrar" en Modo Navidad (Dorado) */
+body.tema-navidad .btn-neon-rojo {
+    color: #ffd700 !important;
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3), inset 0 0 10px rgba(255, 215, 0, 0.3) !important;
+    text-shadow: 0 0 5px #ffd700 !important;
+}
+
+body.tema-navidad .btn-neon-rojo:hover {
+    background: #ffd700 !important;
+    color: #000000 !important; /* Letras negras para máximo contraste al pasar el mouse */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), inset 0 0 15px rgba(255, 215, 0, 0.6) !important;
+    text-shadow: none !important;
+}
+
+/* ============================================
+   RESCATE DEL TÍTULO: SOMBRA EXTREMA (MODO NAVIDAD)
+   ============================================ */
+
+/* 1. Sombra pesada para todo el título (Texto blanco y Emojis) */
+body.tema-navidad .section-title,
+body.tema-navidad h1 {
+    color: #ffffff; 
+    /* Contorno negro sólido (primeras 4 líneas) + Resplandor oscuro profundo (últimas 2) */
+    text-shadow: 
+        2px 2px 0 #000000, 
+        -2px -2px 0 #000000, 
+        2px -2px 0 #000000, 
+        -2px 2px 0 #000000,
+        0 0 15px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(0, 0, 0, 1) !important;
+}
+
+/* 2. Sombra adaptada para la palabra "Navidad" (Conserva el brillo dorado) */
+body.tema-navidad .section-title span,
+body.tema-navidad h1 span {
+    color: #ffd700 !important;
+    /* Mismo contorno negro, pero con un toque del resplandor dorado mezclado con el oscuro */
+    text-shadow: 
+        2px 2px 0 #000000, 
+        -2px -2px 0 #000000, 
+        2px -2px 0 #000000, 
+        -2px 2px 0 #000000,
+        0 0 15px rgba(255, 215, 0, 0.8),
+        0 0 30px rgba(0, 0, 0, 1) !important;
+}
+
+
+/* Opción C: Rojo Terciopelo Profundo */
+body.tema-navidad {
+    background: linear-gradient(180deg, #2a0808 0%, #000000 70%) !important;
+    background-attachment: fixed !important;
+}
+
+/* ============================================
+   FONDO TIPO INTERFERENCIA TV (AZUL OSCURO Y BLANCO)
+   ============================================ */
+body.tema-navidad {
+    background-color: #020b1f !important; /* Azul oscuro profundo */
+    background-image: 
+        /* Líneas de escaneo horizontales (Interferencia blanca) */
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0.03) 2px,
+            transparent 2px,
+            transparent 4px
+        ),
+        /* Brillo azul central para dar profundidad a la pantalla */
+        radial-gradient(circle at 50% 50%, #0a255c 0%, #020b1f 100%) !important;
+    
+    /* Animación rápida para simular la estática de la TV */
+    animation: interferenciaTV 0.3s infinite linear !important;
+    background-attachment: fixed !important;
+}
+/* ============================================
+   FONDO MOSAICO (FIGURAS NEÓN)
+   ============================================ */
+body.tema-navidad {
+    /* El color de fondo base para que el neón resalte */
+    background-color: #094B28 !important; 
+    
+    /* Aquí pones la ruta de tu imagen 1:1 */
+    background-image: url('assets/img/mosaico-navidad.webp') !important;
+    
+    /* Esto le dice a la imagen que se repita en mosaico */
+    background-repeat: repeat !important;
+    
+    /* Ajusta este valor para hacer las figuras más grandes o pequeñas */
+    background-size: 150px 150px !important;
+    
+    /* Mantiene el fondo fijo mientras el usuario baja por los productos */
+    background-attachment: fixed !important;
+}
+
+/* Ajuste al contenedor de filtros para que combine con el mosaico */
+body.tema-navidad .filtros {
+    background-color: rgba(9, 75, 40, 0.9) !important;
+    border: 1px solid rgba(255, 215, 0, 0.5) !important; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(5px); /* Desenfoca el mosaico detrás de la caja para que el texto sea legible */
+}
+
+/* ============================================
+   INTEGRACIÓN TOTAL: NAVBAR, FOOTER Y LOGO NAVIDEÑO
+   ============================================ */
+
+/* 1. Cambiar fondo del Navbar y Footer al verde del mosaico */
+body.tema-navidad .navbar,
+body.tema-navidad .footer {
+    background-color: #094B28 !important;
+}
+
+/* 2. Asegurarnos de que el menú en celulares también sea verde al abrirse */
+body.tema-navidad .nav-menu {
+    background-color: #094B28 !important;
+}
+
+/* 3. Reemplazo mágico del Logo vía CSS */
+body.tema-navidad .logo img {
+    /* Esto sobreescribe la imagen original del layout.js solo cuando es Navidad */
+    content: url("assets/img/logo-navidad.webp");
+}
+
+/* ============================================
+   ELIMINAR FONDOS NEGROS: FILTROS Y TARJETAS (NAVIDAD)
+   ============================================ */
+
+/* 1. Interior de los desplegables (Filtros) */
+body.tema-navidad .filtro-group select,
+body.tema-navidad .filtro-group input {
+    background-color: #052b16 !important; /* Verde pino muy oscuro (casi negro pero con alma verde) */
+    border-color: rgba(255, 215, 0, 0.4) !important; /* Borde dorado sutil */
+    color: #ffffff !important;
+}
+
+/* Brillo dorado al hacer clic en los filtros */
+body.tema-navidad .filtro-group select:focus,
+body.tema-navidad .filtro-group input:focus {
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
+}
+
+/* 2. Fondo de texto en las tarjetas de producto */
+body.tema-navidad .producto-card {
+    background-color: #052b16 !important; /* Reemplaza el gris oscuro original */
+}
+
+/* 3. Etiqueta de "Tamaño" dentro de la tarjeta */
+body.tema-navidad .producto-tamano {
+    background-color: #094B28 !important; /* Verde principal del tema */
+    color: #ffd700 !important; /* Letras doradas */
+    border: 1px solid rgba(255, 215, 0, 0.3) !important;
+}
+
+/* ============================================
+   TEMA PATRIO - MOSAICO GENERAL
+   ============================================ */
+body.tema-patrio {
+    background-color: #094B28 !important; /* El color verde base */
+    background-image: url('assets/img/mosaico-fiestas-patrias.webp') !important;
+    background-repeat: repeat !important;
+    background-size: 150px 150px !important; /* Ajusta este tamaño si quieres las figuras más grandes o chicas */
+    background-attachment: fixed !important;
+}
+
+/* Integrar el Navbar y Footer en Modo Patrio para que combinen con el fondo */
+body.tema-patrio .navbar,
+body.tema-patrio .footer,
+body.tema-patrio .nav-menu {
+    background-color: #094B28 !important;
+}
+
+/* Ajustar los contenedores de filtros para que no desentonen */
+body.tema-patrio .filtros,
+body.tema-patrio .producto-card,
+body.tema-patrio .filtro-group select,
+body.tema-patrio .filtro-group input {
+    background-color: #052b16 !important;
+    border-color: rgba(255, 215, 0, 0.4) !important;
+    color: #ffffff !important;
+}
+
+/* ============================================
+   SOMBRA EXTREMA PARA TÍTULO - FIESTAS PATRIAS
+   ============================================ */
+
+/* 1. Sombra pesada y contorno negro para todo el título y emojis */
+body.tema-patrio .section-title,
+body.tema-patrio h1 {
+    color: #ffffff; 
+    text-shadow: 
+        2px 2px 0 #000000, 
+        -2px -2px 0 #000000, 
+        2px -2px 0 #000000, 
+        -2px 2px 0 #000000,
+        0 0 15px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(0, 0, 0, 1) !important;
+}
+
+/* 2. Sombra y color destacado para la palabra resaltada (span) */
+body.tema-patrio .section-title span,
+body.tema-patrio h1 span {
+    color: #ff3333 !important; /* Rojo tricolor brillante para destacar */
+    text-shadow: 
+        2px 2px 0 #000000, 
+        -2px -2px 0 #000000, 
+        2px -2px 0 #000000, 
+        -2px 2px 0 #000000,
+        0 0 15px rgba(255, 51, 51, 0.8),
+        0 0 30px rgba(0, 0, 0, 1) !important;
+}
+
+
+/* ============================================
+   TEMA PATRIO - MOSAICO CON ESTRUCTURA EN NEGRO
+   ============================================ */
+
+/* 1. Fondo general de la página con el mosaico patrio */
+body.tema-patrio {
+    background-color: #094B28 !important;
+    background-image: url('assets/img/mosaico-fiestas-patrias.webp') !important;
+    background-repeat: repeat !important;
+    background-size: 150px 150px !important;
+    background-attachment: fixed !important;
+}
+
+/* 2. Navbar, Menú móvil y Footer en Negro */
+body.tema-patrio .navbar,
+body.tema-patrio .footer,
+body.tema-patrio .nav-menu {
+    background-color: #000000 !important;
+}
+
+/* 3. Contenedor de filtros y campos de selección en Negro */
+body.tema-patrio .filtros,
+body.tema-patrio .filtro-group select,
+body.tema-patrio .filtro-group input {
+    background-color: #000000 !important;
+    border-color: #333333 !important;
+    color: #ffffff !important;
+}
+
+/* 4. Fondo de la descripción en las tarjetas de producto en Negro */
+body.tema-patrio .producto-card {
+    background-color: #111111 !important;
+}
+
+/* ============================================
+   INTEGRACIÓN GLOBAL: TIPOGRAFÍA BARLOW CONDENSED
+   ============================================ */
+
+body, 
+button, 
+input, 
+select, 
+textarea {
+    font-family: 'Barlow Condensed', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, 
+.section-title, 
+.logo, 
+.nav-link, 
+.footer, 
+.btn, 
+.producto-tamano {
+    font-family: 'Barlow Condensed', sans-serif !important;
+    letter-spacing: 1px !important;
+}
+
+h1, h2, .section-title {
+    font-weight: 700 !important;
+    text-transform: uppercase;
+}
+
+body {
+    font-weight: 500;
+    font-size: 1.1rem;
 }

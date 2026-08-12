@@ -9,8 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
     <script src="layout.js" defer></script>
     <script src="app.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
+    
     <main>
         <!-- Hero Section -->
         <section class="hero">
@@ -24,7 +29,7 @@
                 <!-- Capa flotante con los botones -->
                 <div class="hero-overlay-botones">
                     <a href="personalizados.html" class="btn btn-neon-verde">Cotizar Personalizado</a>
-                    <a href="catalogo.html" class="btn btn-neon-rojo">Ver Categorías</a>
+                    <a href="catalogo.html" class="btn btn-neon-rojo">Ver Catalogo</a>
                 </div>
             </div>
         </section>
@@ -74,7 +79,7 @@
                 destacadosContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">No hay productos disponibles.</p>';
             }
 
-            // Cargar categorías
+           // Cargar categorías
             const categorias = await app.obtenerCategorias();
             const catsContainer = document.getElementById('categorias-grid');
             if (catsContainer && categorias.length > 0) {
@@ -85,22 +90,32 @@
                 catsContainer.style.gap = '1.5rem';
                 catsContainer.innerHTML = categorias.map(cat => {
                     let nombre = cat.nombre;
+                    let estilosFondo = '';
                     
-                    // Fiestas Patrias - banderas
+                    // Asignar el mosaico correspondiente según el slug de la categoría
                     if (cat.slug === 'fiestas-patrias') {
-                        nombre = '🇲🇽 ' + cat.nombre + ' 🇲🇽';
+                        estilosFondo = `background-color: #094B28; background-image: url('assets/img/mosaico-fiestas-patrias.webp'); background-repeat: repeat; background-size: 120px 120px;`;
+                    } else if (cat.slug === 'navideno') {
+                        estilosFondo = `background-color: #094B28; background-image: url('assets/img/mosaico-navidad.webp'); background-repeat: repeat; background-size: 120px 120px;`;
                     }
                     
                     return `
-                        <a href="catalogo.html?categoria=${cat.slug}" class="producto-card" style="text-align: center; padding: 2rem; width: 280px;">
-                            <h3 style="color: #ffffff; font-size: 1.25rem;">${nombre}</h3>
-                            <p style="color: #ffffff; margin-top: 0.5rem;">Ver productos →</p>
+                        <a href="catalogo.html?categoria=${cat.slug}" class="producto-card" style="text-align: center; padding: 3rem 2rem; width: 300px; ${estilosFondo} position: relative; overflow: hidden;">
+                            <!-- Capa oscura semitransparente opcional para que el texto resalte perfecto sobre el mosaico -->
+                            <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.65); z-index: 1;"></div>
+                            
+                            <!-- Contenido de la tarjeta (por encima de la capa oscura) -->
+                            <div style="position: relative; z-index: 2;">
+                                <h3 style="color: #ffffff; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">${nombre}</h3>
+                                <p style="color: #ffd700; margin-top: 0.75rem; font-weight: bold;">Ver productos →</p>
+                            </div>
                         </a>
                     `;
                 }).join('');
             } else if (catsContainer) {
                 catsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">No hay categorías disponibles.</p>';
             }
+            
         });
     </script>
 </body>
