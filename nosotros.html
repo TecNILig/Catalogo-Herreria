@@ -14,146 +14,111 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
-       .nosotros-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        /* Tarjetas Oscuras con efecto Neón Tricolor */
-        .nosotros-card {
-            background: #111111; /* Fondo oscuro */
-            padding: 2.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            border: 1px solid #333333;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-        
-        /* Borde tricolor alternado para cada tarjeta */
-        .nosotros-card:nth-child(1) { border-left: 3px solid #00ff00; } /* Verde */
-        .nosotros-card:nth-child(2) { border-left: 3px solid #ffffff; } /* Blanco */
-        .nosotros-card:nth-child(3) { border-left: 3px solid #ff0000; } /* Rojo */
-        .nosotros-card:nth-child(4) { border-left: 3px solid #00ff00; } /* Verde */
-
-        .nosotros-card:hover {
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .nosotros-card h2 {
-            color: #ffffff; /* Títulos en blanco */
-            margin-bottom: 1rem;
+        /* Contenedor principal a pantalla completa */
+        .nosotros-content {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
             display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
             align-items: center;
-            gap: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .nosotros-card p {
-            color: #cccccc; /* Textos en gris claro */
-            line-height: 1.8;
-            font-size: 1.05rem;
+        /* Banners ocupando el 100% del ancho */
+        .banner-item {
+            width: 100%;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Lista de Servicios */
-        .servicios-lista {
-            display: grid;
-            gap: 1rem;
-            margin-top: 1.5rem;
+        .banner-item:hover {
+            transform: scale(1.005);
         }
 
-        .servicio-item {
+        .banner-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Botones de Contacto centrados con margen de protección */
+        .contacto-acciones {
             display: flex;
+            gap: 1.5rem;
+            justify-content: center;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            background: #000000; /* Interior negro puro */
-            border: 1px solid #333333;
-            border-radius: 8px;
-            color: #ffffff; /* Letras blancas */
-            transition: all 0.3s ease;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            width: 100%;
+            padding: 0 1rem;
         }
 
-        .servicio-item:hover {
-            border-color: #555555;
-            background: #1a1a1a;
-            transform: translateX(5px); /* Pequeño salto a la derecha al pasar el mouse */
+        /* Resets e imágenes dentro de picture */
+        .banner-item picture,
+        .banner-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
         }
 
+        /* Ajustes opcionales para vista móvil */
+        @media (max-width: 768px) {
+            .nosotros-content {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                left: 0;
+                right: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <main>
-        <section class="section">
-            <div class="container">
-                <h1 class="section-title">Sobre <span>Nosotros</span></h1>
+        <section class="section" style="padding-left: 0; padding-right: 0; overflow-x: hidden;">
+            <div class="container" style="max-width: 100%; padding: 0;">
 
                 <div class="nosotros-content">
-                    <div class="nosotros-card">
-                        <h2>💡 ¿Quiénes somos?</h2>
-                        <p>
-                            ✨ Somos una empresa tecnológica 100% creativa en iluminación, así como en la fabricación de adornos luminosos festivos, interactivos, patrios 🇲🇽 y navideños 🎄, dando una solución integral.
-                        </p>
-                    </div>
+                   <!-- Banner 1: ¿Quiénes Somos? -->
+                <div class="banner-item">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="assets/img/banner-vertical-quienes-somos.jpg">
+                        <img src="assets/img/banner-quienes-somos.jpg" alt="¿Quiénes Somos? Tecnilight" loading="lazy">
+                    </picture>
+                </div>
 
-                    <div class="nosotros-card">
-                        <h2>💎 Calidad y Excelencia</h2>
-                        <p>
-                            Nuestros productos son elaborados con material de la más alta calidad. Nos caracterizamos por nuestra versatilidad en diseño de producto, eficiencia ⚙️ y seguridad 🛡️.
-                        </p>
-                        <p style="margin-top: 1rem;">
-                            💭🌟 Los sueños e imaginación de nuestros clientes embellecerán y cautivarán sus ciudades mágicas 🏙️, acompañados de nuestros productos que son fabricados a la medida de sus necesidades 📏🤝.
-                        </p>
-                    </div>
+                <!-- Banner 2: Calidad y Excelencia -->
+                <div class="banner-item">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="assets/img/banner-vertical-calidad.jpg">
+                        <img src="assets/img/banner-calidad.jpg" alt="Calidad y Excelencia Tecnilight" loading="lazy">
+                    </picture>
+                </div>
 
-                    <div class="nosotros-card">
-                        <h2>🛠️ Servicios</h2>
-                        <div class="servicios-lista">
-                            <div class="servicio-item">
-                                <span style="font-size: 1.5rem;">🎅</span>
-                                <span>Fabricación y venta de figuras patrias y navideñas.</span>
-                            </div>
-                            <div class="servicio-item">
-                                <span style="font-size: 1.5rem;">👷‍♂️</span>
-                                <span>Suministro e instalación de material con equipo especializado.</span>
-                            </div>
-                            <div class="servicio-item">
-                                <span style="font-size: 1.5rem;">📐</span>
-                                <span>Plan de diseño para gobiernos, municipios y comercios.</span>
-                            </div>
-                            <div class="servicio-item">
-                                <span style="font-size: 1.5rem;">🏛️</span>
-                                <span>Diseño ornamentativo de fachadas, plazas, calles, etc.</span>
-                            </div>
-                            <div class="servicio-item">
-                                <span style="font-size: 1.5rem;">📱</span>
-                                <span>Asesoría para la información en redes sociales.</span>
-                            </div>
-                            <div class="servicio-item">
-                                <span style="font-size: 1.5rem;">🚚</span>
-                                <span>Envíos a zona de cobertura de la república.</span>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Banner 3: Servicios -->
+                <div class="banner-item">
+                    <picture>
+                        <source media="(max-width: 768px)" srcset="assets/img/banner-vertical-servicios.jpg">
+                        <img src="assets/img/banner-servicios.jpg" alt="Servicios Tecnilight" loading="lazy">
+                    </picture>
+                </div>
 
-                    <div class="nosotros-card">
-                        <h2>Contacto</h2>
-                        <p style="margin-bottom: 1rem;">
-                            ¿Tienes un proyecto en mente? Estamos aquí para ayudarte.
-                        </p>
-                        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem;">
-                            <a href="https://wa.me/522214353123" target="_blank" class="btn btn-whatsapp">
-                                <svg viewBox="0 0 24 24" width="22" height="22" style="margin-right: 5px;"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                                WhatsApp
-                            </a>
-                            <a href="catalogo.html" class="btn btn-neon-rojo">
-                                <svg viewBox="0 0 24 24" width="22" height="22" style="margin-right: 5px;"><path fill="currentColor" d="M12 2l-5.5 9h11z M17.5 9l-5.5 9-5.5-9z M4 20h16v2H4z"/></svg>
-                                Ver Catálogo
-                            </a>
-                        </div>
+                    <!-- Botones de Contacto Directos -->
+                    <div class="contacto-acciones">
+                        <a href="https://wa.me/522214353123" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+                            <svg viewBox="0 0 24 24" width="22" height="22" style="margin-right: 5px;"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            WhatsApp
+                        </a>
+                        <a href="catalogo.html" class="btn btn-neon-rojo">
+                            <svg viewBox="0 0 24 24" width="22" height="22" style="margin-right: 5px;"><path fill="currentColor" d="M12 2l-5.5 9h11z M17.5 9l-5.5 9-5.5-9z M4 20h16v2H4z"/></svg>
+                            Ver Catálogo
+                        </a>
                     </div>
                 </div>
             </div>
